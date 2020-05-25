@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>precanna styles</title>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/slick.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/price_rangs.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+      .order {
+        background: #cae2eb;
+        border-radius: 7px;
+        margin: 10px;
+      }
+
+      .order th {
+        text-transform: capitalize;
+        font-weight: bold;
+        border-bottom: 1px solid grey;
+      }
+
+      .qnty, .price, .total {
+        text-align: right;
+      }
+
+      .qnty, .price {
+        border-right: 1px solid grey;
+      }
+
+      .order th, .order td {
+        padding: 10px;
+      }
+
+      .last {
+        font-weight: bold;
+        border-top: 1px solid grey;
+      }
+
+      .details {
+        margin-left: 20px;
+      }
+    </style>
+</head>
+
+<body class="bg-white">
+  <!-- include common hearder -->
+  <%- include ('include/common-header') %>
+
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-12">
+                  <div class="breadcrumb_iner">
+                      <div class="breadcrumb_iner_item">
+                          <p>Home / Checking out: <%= req.user.forenames + ' ' + req.user.surname %></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================Page Content Area =================-->
+  <section class="login_part section_padding">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12 col-md-12">
+          <h3 class="mb-30">Your Order:</h3>
+          <!-- orders table -->
+          <table class="order">
+            <tbody>
+              <tr>
+                <th class="number">#</th>
+                <th class="product">product</th>
+                <th class="qnty">quantity</th>
+                <th class="price">unit price</th>
+                <th class="total">total</th>
+              </tr>
+              <% cartlist.products.forEach((product, i) => { %>
+                <tr>
+                  <td class="number"><%= i + 1 %></td>
+                  <td class="product"><%= product.name + " : " + product.color + ", " + product.size  %></td>
+                  <td class="qnty"><%= product.quantity %></td>
+                  <td class="price"><%= (product.price * (1.0 - product.discount)).toFixed(2) %></td>
+                  <td class="total"><%= product.subtotal.toFixed(2) %></td>
+                </tr>
+              <% }); %>
+              <tr>
+                <td class="number last"></td>
+                <td class="product last">Total</td>
+                <td class="qnty last"></td>
+                <td class="price last"></td>
+                <td class="total last"><%= cartlist.subtotal.toFixed(2) %></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <div style="width: 50%; float: left;">
+              <h3 class="mb-30">Your Billing Details:</h3>
+              <div class="details">
+                <h5><%= req.user.forenames + " " + req.user.surname %></h5>
+                <p>Address:<br /><%= req.user.address %><br />
+                  Phone:<br /><%= req.user.phone %><br />
+                  Email:<br /><%= req.user.email %></p>
+                <a href="#" class="genric-btn success circle">change details</a>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="mb-30">Shipping options:</h3>
+              <input type="radio" id="no_shipping" name="shipping_option" value='0'>
+              <label for="no_shipping">No Shipping</label><br />
+              <input type="radio" id="standard_shipping" name="shipping_option" value='0'>
+              <label for="no_shipping">Standard Shipping</label><br />
+
+              <table class="order">
+                <tbody>
+                  <tr>
+                    <td class="product">Order Total</td>
+                    <td class="qnty"></td>
+                    <td class="total"><%= cartlist.subtotal.toFixed(2) %></td>
+                  </tr>
+                  <tr>
+                    <td class="product">Shipping Fee</td>
+                    <td class="qnty"></td>
+                    <td class="total">0.00</td>
+                  </tr>
+                  <tr>
+                    <td class="product">Vat (12%)</td>
+                    <td class="qnty"></td>
+                    <td class="total"><%= (cartlist.subtotal * 0.12).toFixed(2) %></td>
+                  </tr>
+                  <tr>
+                    <td class="product last">To Pay</td>
+                    <td class="qnty last"></td>
+                    <td class="total last"><%= (cartlist.subtotal * 1.12).toFixed(2) %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div style="clear: both; margin: 30px;"><button class="genric-btn success circle">place order</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- include jquery plugins -->
+  <%- include ('include/jqueryplugins') %>
+
+</body>
+
+</html>

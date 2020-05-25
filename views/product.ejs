@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zxx">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>precanna styles</title>
+  <link rel="icon" href="img/favicon.png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- animate CSS -->
+  <link rel="stylesheet" href="css/animate.css">
+  <!-- owl carousel CSS -->
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/lightslider.min.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="css/all.css">
+  <link rel="stylesheet" href="css/nice-select.css">
+  <!-- flaticon CSS -->
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/themify-icons.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <!-- style CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class = "bg-white">
+  <!-- include common hearder -->
+  <%- include ('include/common-header') %>
+
+  <% var product_category = '';
+    var product_subcategory = '';
+    category.forEach((category) => {
+      if (category.id === product.category_id) {
+        product_category = category.name;
+        category.subcategory.forEach((subcategory) => {
+          if (subcategory.id == product.subcategory_id) product_subcategory = subcategory.name;
+        });
+      }
+    }); %>
+
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-12">
+                  <div class="breadcrumb_iner">
+                      <div class="breadcrumb_iner_item">
+                          <p>Home/Shop/<%= product_category + '/' + product_subcategory + '/' + product.name %></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================Single Product Area =================-->
+  <div class="product_image_area section_padding">
+    <div class="container">
+      <div class="row s_product_inner">
+        <div class="col-lg-5">
+          <div class="product_slider_img">
+            <div id="vertical">
+              <% if (product.img) { product.img = JSON.parse(product.img);
+                product.img.forEach( function(img) { %>
+                <div data-thumb="<%= static_root_url.product_img + product.img_dir + img %>">
+                  <img src="<%= static_root_url.product_img + product.img_dir + img %>" />
+                </div>
+              <% }); } %>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 offset-lg-1">
+          <div class="s_product_text">
+            <h3><%= product.name %></h3>
+            <h2>
+              <% if (product.discount === 0) { %>
+                <%= currency.symbol + product.price %>
+              <% } else { %>
+                now <%= currency.symbol + ((product.price - (product.price * product.discount)) * currency.multiplier).toFixed(2) %> <span style="color:red;" >was <%= currency.symbol + (product.price * currency.multiplier) %></span>
+              <% } %>
+            </h2>
+            <ul class="list">
+              <li>
+                <a class="active" href="/category?id=<%= product.category_id %>">
+                  <span>Category</span> : <%= product_category %></a>
+              </li>
+              <li>
+                <a href="#"> <span>Availibility</span> : In Stock (<%= product.options.length %> options)</a>
+              </li>
+            </ul>
+            <p>
+                <%= product.summary %>
+            </p>
+            <div class="card_area">
+              <% if (product.options.length > 0) { %>
+                  <div>
+                    <select id="option" name="option">
+                      <% product.options.forEach((option) => { %>
+                          <option class="option-id" value="<%= option.id %>">Color: <%= option.color %> | Size: <%= option.size %></option>
+                      <% }); %>
+                    </select>
+                    <p style="clear: both">Select the product colour and size to add to cart.</p>
+                  </div>
+                  <div class="product_count d-inline-block">
+                    <span class="inumber-decrement"><i class="ti-minus"></i></span>
+                    <input class="input-number" id="product_quantity" type="text" value="1" min="0" max="10">
+                    <span class="number-increment"> <i class="ti-plus"></i></span>
+                  </div>
+                <div class="add_to_cart">
+                  <input type="hidden" id="product_code" value="<%= product.code %>">
+                  <button type="submit" id="addtocart_1" class="btn_3">add to cart</a>
+                </div>
+            <% } %>
+                <div>
+                  <a href="/addtofavourite?code=<%= product.code %>" class="like_us"> <i class="ti-heart"></i> </a>
+                </div>
+
+              <div class="social_icon">
+                  <a href="#" class="fb"><i class="ti-facebook"></i></a>
+                  <a href="#" class="tw"><i class="ti-twitter-alt"></i></a>
+                  <a href="#" class="li"><i class="ti-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--================End Single Product Area =================-->
+
+  <!--================Product Description Area =================-->
+  <section class="product_description_area">
+    <div class="container">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">Description</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+            aria-selected="false">Comments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
+            aria-selected="false">Reviews</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <p>
+            <%= product.description %>
+          </p>
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="comment_list">
+                <% product.comments.forEach(function(comment) { %>
+                  <div class="review_item">
+                    <div class="media">
+                      <div class="media-body">
+                        <h4><%= comment.name %></h4>
+                        <h5><%= comment.datetime %></h5>
+                      </div>
+                    </div>
+                    <p>
+                      <%= comment.comment %>
+                    </p>
+                  </div>
+                <% }); %>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="review_box">
+                <h4>Post a comment</h4>
+                <form class="row contact_form" action="comment" method="post" id="comment_form"
+                  novalidate="novalidate">
+                  <input type="hidden" name="product" value="<%= product.code %>" />
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Your Full name" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="number" name="number" placeholder="Phone Number" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea class="form-control" name="message" id="message" rows="1"
+                        placeholder="Message"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12 text-right">
+                    <button type="submit" value="submit" class="btn_3">
+                      Submit Now
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="row total_rate">
+                <div class="col-6">
+                  <div class="box_total">
+                    <h5>Overall</h5>
+                    <h4><%= product.rating.toFixed(1) %></h4>
+                    <h6>(<%= product.review_stats.all %> Reviews)</h6>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="rating_list">
+                    <h3>Based on <%= product.review_stats.all %> Reviews</h3>
+                    <ul class="list">
+                      <li>
+                        <a href="#">5 Star
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i><%= product.review_stats.fivestar %></a>
+                      </li>
+                      <li>
+                        <a href="#">4 Star
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i></a>
+                          <i class="fa fa-star"></i><%= product.review_stats.fourstar %>
+                      </li>
+                      <li>
+                        <a href="#">3 Star
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i></a>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i><%= product.review_stats.threestar %>
+                      </li>
+                      <li>
+                        <a href="#">2 Star
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i></a>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i><%= product.review_stats.twostar %>
+                      </li>
+                      <li>
+                        <a href="#">1 Star
+                          <i class="fa fa-star"></i></a>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i><%= product.review_stats.onestar %>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="review_list">
+                <% product.reviews.forEach(function(review) { %>
+                  <div class="review_item">
+                    <div class="media">
+                      <div class="media-body">
+                        <h4><%= review.name %></h4>
+                        <% for (i=0; i< review.rating; i++) { %>
+                          <i class="fa fa-star"></i>
+                        <% }; %>
+                      </div>
+                    </div>
+                    <p>
+                      <%= review.review %>
+                    </p>
+                  </div>
+                <% }); %>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="review_box">
+                <h4>Add a Review</h4>
+                <p>Your Rating:</p>
+                <ul class="list">
+                    <li><i id="x1" class="fa fa-star"></i></li>
+                    <li><i id="x2" class="fa fa-star"></i></li>
+                    <li><i id="x3" class="fa fa-star"></i></li>
+                    <li><i id="x4" class="fa fa-star"></i></li>
+                    <li><i id="x5" class="fa fa-star"></i></li>
+                </ul>
+                <p id="rated">5 Star</p>
+                <form class="row contact_form" action="review" method="post" id="review_form" novalidate="novalidate">
+                  <input type="hidden" name="product" value="<%= product.code %>" />
+                  <input type="hidden" name="rating" id="rating" value="5" />
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="name" placeholder="Your Full name" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="email" class="form-control" name="email" placeholder="Email Address" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="number" placeholder="Phone Number" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea class="form-control" name="message" rows="1" placeholder="Review"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12 text-right">
+                    <button type="submit" value="submit" class="btn_3">
+                      Submit Now
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--================End Product Description Area =================-->
+
+  <!-- include shipping_details view -->
+  <%- include ('include/shipping') %>
+
+  <!-- include common footer -->
+  <%- include ('include/common-footer') %>
+
+  <!-- include jquery plugins -->
+  <%- include ('include/jqueryplugins') %>
+
+</body>
+
+</html>

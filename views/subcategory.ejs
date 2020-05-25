@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>precanna styles</title>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/slick.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/price_rangs.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-white">
+  <!-- include common hearder -->
+  <%- include ('include/common-header') %>
+
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-12">
+                  <div class="breadcrumb_iner">
+                      <div class="breadcrumb_iner_item">
+                          <p>Home / <%= subcategory_page.name %></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================Category Product Area =================-->
+  <section class="cat_product_area section_padding border_top">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-3">
+                  <div class="left_sidebar_area">
+                      <aside class="left_widgets p_filter_widgets sidebar_box_shadow">
+                          <div class="l_w_title">
+                              <h3>Browse Categories</h3>
+                          </div>
+                          <div class="widgets_inner">
+                            <ul class="list">
+                              <% category.forEach(function(category) {
+                                if (category.subcategory.length > 0) { %>
+                                  <li class="sub-menu">
+                                      <a href="#subcategory" class=" d-flex justify-content-between">
+                                          <%= category.name %>
+                                          <div class="right ti-plus"></div>
+                                      </a>
+                                      <ul>
+                                      <% category.subcategory.forEach(function(subcategory) { %>
+                                        <li><a href="/subcategory?id=<%= subcategory.id %>"><%= subcategory.name %></a></li>
+                                      <% }); %>
+                                      </ul>
+                                  </li>
+                                  <%
+                                } else { %>
+                                  <li>
+                                      <a href="/category?id=<%= category.id %>"><%= category.name %></a>
+                                  </li>
+                                  <% }
+                              }); %>
+                              </ul>
+                          </div>
+                      </aside>
+                  </div>
+              </div>
+              <div class="col-lg-9">
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <div class="product_top_bar d-flex justify-content-between align-items-center">
+                              <div class="single_product_menu product_bar_item">
+                                  <h2><%= subcategory_page.name + ' (' + subcategory_page.products.length.toString() + ')' %></h2>
+                              </div>
+                              <div class="product_top_bar_iner product_bar_item d-flex">
+                                  <div class="product_bar_single">
+                                      <select>
+                                          <option data-display="Show 12">Show 12</option>
+                                          <option value="1">Show 18</option>
+                                          <option value="2">Show 27</option>
+                                      </select>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <% subcategory_page.products.forEach(function(product) {
+                        product.img = JSON.parse(product.img); %>
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="single_category_product">
+                                <div class="single_category_img">
+                                    <img src="<%= static_root_url.product_img + product.img_dir + (product.img? product.img[0] : '') %>" alt="">
+                                    <div class="category_social_icon">
+                                        <ul>
+                                            <li><a href="/addtofavourite?code=<%= product.code %>"><i class="ti-heart"></i></a></li>
+                                            <li><a href="/product?code=<%= product.code %>"><i class="ti-bag"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="category_product_text">
+                                        <a href="/product?code=<%= product.code %>"><h5><%= product.name %></h5></a>
+                                        <p>
+                                          <% if (product.discount === 0) { %>
+                                            <%= currency.symbol + product.price %>
+                                          <% } else { %>
+                                            now <%= currency.symbol + ((product.price - (product.price * product.discount)) * currency.multiplier).toFixed(2) %> <span style="color:red;" >was <%= currency.symbol + (product.price * currency.multiplier) %></span>
+                                          <% } %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <% }); %>
+                      <div class="col-lg-12 text-center">
+                          <a href="#" class="btn_2">More Items</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!--================End Category Product Area =================-->
+
+  <!-- include shipping_details view -->
+  <%- include ('include/shipping') %>
+
+  <!-- include common footer -->
+  <%- include ('include/common-footer') %>
+
+  <!-- include jquery plugins -->
+  <%- include ('include/jqueryplugins') %>
+
+</body>
+
+</html>

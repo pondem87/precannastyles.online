@@ -1,0 +1,33 @@
+{
+  "name": "precannastyles.online",
+  "version": "1.0.0",
+  "description": "online store project for mai mune",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "store",
+    "shoes",
+    "hand-bags",
+    "clothes",
+    "shopping"
+  ],
+  "author": "tendai pfidze",
+  "license": "ISC",
+  "dependencies": {
+    "@supercharge/strings": "^1.7.0",
+    "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "express-mysql-session": "^2.1.4",
+    "express-session": "^1.17.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.18.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}

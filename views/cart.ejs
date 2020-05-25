@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zxx">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>precanna styles</title>
+  <link rel="icon" href="img/favicon.png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- animate CSS -->
+  <link rel="stylesheet" href="css/animate.css">
+  <!-- owl carousel CSS -->
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <!-- nice select CSS -->
+  <link rel="stylesheet" href="css/nice-select.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="css/all.css">
+  <!-- flaticon CSS -->
+  <link rel="stylesheet" href="css/flaticon.css">
+  <link rel="stylesheet" href="css/themify-icons.css">
+  <!-- font awesome CSS -->
+  <link rel="stylesheet" href="css/magnific-popup.css">
+  <!-- swiper CSS -->
+  <link rel="stylesheet" href="css/slick.css">
+  <link rel="stylesheet" href="css/price_rangs.css">
+  <!-- style CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-white">
+  <!-- include common hearder -->
+  <%- include ('include/common-header') %>
+
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-12">
+                  <div class="breadcrumb_iner">
+                      <div class="breadcrumb_iner_item">
+                          <p>Home/Shopping Cart: <%= req.user.forenames + ' ' + req.user.surname %></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- breadcrumb end-->
+
+  <!--================Cart Area =================-->
+  <section class="cart_area section_padding">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% cartlist.products.forEach((product) => {
+                product.img = JSON.parse(product.img); %>
+              <tr class="product">
+                <td>
+                  <div class="media">
+                    <div class="d-flex">
+                      <img src="<%= static_root_url.product_img + product.img_dir + product.img[0] %>" alt="" />
+                    </div>
+                    <div class="media-body">
+                      <p><a href="product?code=<%= product.code %>"><%= product.name %></a><br />
+                      Color: <%= product.color %> | Size: <%= product.size %></p>
+                      <input type="hidden" class="option" value="<%= product.stock_id %>">
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h5><%= currency.symbol %><span class="product_price"><%= ((product.price * (1.0 - product.discount)) * currency.multiplier).toFixed(2) %></span></h5>
+                </td>
+                <td>
+                  <div class="product_count">
+                    <span class="input-number-decrement"> <i class="ti-minus"></i></span>
+                    <input id="<%= product.code %>" class="input-number" type="text" value="<%= product.quantity %>" min="0" max="10">
+                    <span class="input-number-increment"> <i class="ti-plus"></i></span>
+                  </div>
+                </td>
+                <td>
+                  <h5><%= currency.symbol %><span class="product_total"><%= (product.subtotal * currency.multiplier).toFixed(2) %></span></h5>
+                </td>
+              </tr>
+              <% }); %> <!-- end of cart list loop -->
+
+              <tr class="bottom_button">
+                <td>
+                  <button id="update_btn" class="btn_1">Update Cart</button>
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  <!--<div class="cupon_text float-right">
+                    <a class="btn_1" href="#">Close Coupon</a>
+                  </div>-->
+                </td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <h5>Subtotal</h5>
+                </td>
+                <td>
+                  <h5><%= currency.symbol %><span id="cart_subtotal"><%= (cartlist.subtotal * currency.multiplier).toFixed(2) %></span></h5>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+          <div class="checkout_btn_inner float-right">
+            <a class="btn_1" href="cartegory?id=1">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="/checkout">Proceed to checkout</a>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!--================End Cart Area =================-->
+
+  <!-- include shipping_details view -->
+  <%- include ('include/shipping') %>
+
+  <!-- include common footer -->
+  <%- include ('include/common-footer') %>
+
+  <!-- include jquery plugins -->
+  <%- include ('include/jqueryplugins') %>
+
+  </body>
+
+  </html>

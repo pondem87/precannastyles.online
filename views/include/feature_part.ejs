@@ -1,0 +1,19 @@
+<!-- feature_part start-->
+    <section class="feature_part pt-4">
+        <div class="container-fluid p-lg-0 overflow-hidden">
+            <div class="row align-items-center justify-content-between">
+              <% home.features.forEach((feature) => {
+                  feature.product.img = JSON.parse(feature.product.img); %>
+                  <div class="col-lg-4 col-sm-6">
+                      <div class="single_feature_post_text">
+                          <img src="<%= static_root_url.product_img + feature.product.img_dir + feature.product.img[0] %>" alt="#">
+                          <div class="hover_text">
+                              <a href="/subcategory?id=<%= feature.product.subcategory_id %>" class="btn_2"><%= feature.feature_label %></a>
+                          </div>
+                      </div>
+                  </div>
+              <% }); %>
+            </div>
+        </div>
+    </section>
+    <!-- feature_part end-->
