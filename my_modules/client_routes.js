@@ -1,5 +1,6 @@
 const cmanager = require('./content_manager');
 const isAuth = require('./isAuth').isAuth;
+const ps = require('./pass_reset');
 
 module.exports.init = (app, passport) => {
   //custom middleware for managing content
@@ -119,7 +120,15 @@ module.exports.init = (app, passport) => {
   });
 
   app.get('/forgot', function(req, res) {
-    res.render('forgot');
+    res.render('forgot', {
+      req: req,
+      category: req.category,
+      shipping: cmanager.get_shipping()
+    });
+  });
+
+  app.get('/reset', function (req, res) {
+    ps.check_token(req, res);
   });
 
   //*****Post Routes**************************************************************
@@ -141,10 +150,13 @@ module.exports.init = (app, passport) => {
   app.post('/reg', require('./register').register);
 
   app.post('/sendmail', function(req, res) {
-
   });
 
-  app.post('/reqreset', function(req, reset) {
-    require('./pass_reset').generate_token(req, res);
+  app.post('/reqreset', function(req, res) {
+    ps.generate_token(req, res);
   });
+
+  app.post('/reset', function(req, res) {
+    ps.set_password(req, res);
+  })
 }

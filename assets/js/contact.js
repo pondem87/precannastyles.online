@@ -130,6 +130,13 @@ $(document).ready(function(){
       });
     });
 
+    $("#forgot-submit").click(() => {
+      var email = $("#rstemail").val();
+      $.post('/reqreset', { email: email }, function (data) {
+        $("#forgot-response").html(data.text);
+      });
+    });
+
     (function($) {
         "use strict";
 

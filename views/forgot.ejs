@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>precanna styles</title>
+    <link rel="icon" href="img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/slick.css">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="css/price_rangs.css">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-white">
+  <!-- include common hearder -->
+  <%- include ('include/common-header') %>
+  <!--================Home Banner Area =================-->
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-12">
+                  <div class="breadcrumb_iner">
+                      <div class="breadcrumb_iner_item">
+                          <p>Home / Reset Password</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================register_part Area =================-->
+  <section class="login_part section_padding">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-lg-6 col-md-6">
+                  <h4>Enter email below to reset password</h4>
+                  <h5 id="forgot-response"></h5>
+                  <div class="col-md-12 form-group p_star">
+                    <label for="rstemail"><h5>Email:</h5></label>
+                    <input type="email" id="rstemail" name="email" value="" class="form-control" class="form-control" placeholder="type email here">
+                  </div>
+                  <button id="forgot-submit" class="btn_3">Submit</button>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!--================register_part end =================-->
+
+  <!-- include shipping_details view -->
+  <%- include ('include/shipping') %>
+
+  <!-- include common footer -->
+  <%- include ('include/common-footer') %>
+
+  <!-- include jquery plugins -->
+  <%- include ('include/jqueryplugins') %>
+
+</body>
+
+</html>

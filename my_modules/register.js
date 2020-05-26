@@ -8,8 +8,11 @@ module.exports.register = (req, res, next) => {
     //get hash and salt of password_hash
     var pw = pw_hashing.gen_pword(req.body.password2);
 
-    var sql = 'INSERT INTO `user` (`forenames`, `surname`, `email`, `hashed`, `salt`, `address`, `phone`,`active`,`admin`) VALUES (?)';
-    var values = [req.body.firstname, req.body.lastname, req.body.email, pw.hashed, pw.salt, req.body.address, req.body.phone, '1', '0'];
+    //random unknown reset_code
+    const token = str.random(50);
+
+    var sql = 'INSERT INTO `user` (`forenames`, `surname`, `email`, `hashed`, `salt`, `address`, `phone`,`active`,`admin`,`reset_code`) VALUES (?)';
+    var values = [req.body.firstname, req.body.lastname, req.body.email, pw.hashed, pw.salt, req.body.address, req.body.phone, '1', '0', `token`];
     connection.query(sql, [values], (error, results, fields) => {
       if (error) {
         if (error.code == 'ER_DUP_ENTRY') {

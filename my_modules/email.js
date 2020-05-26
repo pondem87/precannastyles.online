@@ -1,21 +1,21 @@
 const nodemailer = require('nodemailer');
 
-var service = process.env.ADMIN_MAIL_SERVICE;
-var email = process.env.ADMIN_MAIL;
-var password = process.env.ADMIN_MAIL_PWD;
+const service = process.env.ADMIN_MAIL_SERVICE;
+const email = process.env.ADMIN_MAIL;
+const password = process.env.ADMIN_MAIL_PWD;
 
 const transporter = nodemailer.createTransport({
   service: service,
   auth: {
     user: email,
-    pass: password'
+    pass: password
   }
 });
 
-const send_mail = (mail, res) => {
+const send_mail = (mail, done) => {
 
   var mailOptions = {
-    from: mail.from,
+    from: email,
     to: mail.to,
     subject: mail.subject,
     text: mail.content
@@ -23,11 +23,15 @@ const send_mail = (mail, res) => {
 
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
-      console.log(error);
-      res.send("email not sent");
+      console.log('email: Failed to send email: ',error);
+      done(false);
     } else {
-      console.log('Email sent: ' + info.response);
-      res.send("email sent");
+      console.log('email: Email sent: ' + info.response);
+      done(true);
     }
   });
+};
+
+module.exports = {
+  send_mail: send_mail
 };

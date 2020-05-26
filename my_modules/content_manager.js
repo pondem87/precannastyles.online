@@ -2,8 +2,10 @@ const dbase = require('./database');
 const fs = require('fs');
 const str = require('@supercharge/strings');
 
-console.log("content_manager: creating dbase pool, 20 connections");
-const pool = dbase.create_pool(20);
+var pool_size = process.env.DB_POOL_SIZE;
+
+console.log(`content_manager: creating dbase pool, ${pool_size} connections`);
+const pool = dbase.create_pool(pool_size);
 
 const get_pool = function() {
   console.log("content_manager: returning dbase pool to caller");
@@ -477,11 +479,16 @@ const product_entry = (req, res, next) => {
   pool.getConnection((error, connection) => {
     if (error) throw error;
 
+    var code = []
+    for (var i=0; i<3; i++) {
+      code[i] = str.random(6).toUpperCase();
+    }
+
     console.log("product entry req.body:");
     console.log(req.body);
     var sql = 'call addproduct(?)';
     var values = [code[0],code[1],code[2],req.body.name,req.body.summary,req.body.description,req.body.price,req.body.discount,req.body.subcategory];
-    connection.query(sql, [[values]], (error, results, fields) => {
+    connection.query(sql, [values], (error, results, fields) => {
       if (error) {
         connection.release();
         throw error;

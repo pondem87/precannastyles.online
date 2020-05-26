@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/pondem87/precannastyles.online.git"
+  },
   "keywords": [
     "store",
     "shoes",
@@ -27,6 +31,7 @@
     "express-session": "^1.17.1",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.4.6",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7"
