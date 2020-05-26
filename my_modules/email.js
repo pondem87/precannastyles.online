@@ -1,10 +1,14 @@
 const nodemailer = require('nodemailer');
 
+var service = process.env.ADMIN_MAIL_SERVICE;
+var email = process.env.ADMIN_MAIL;
+var password = process.env.ADMIN_MAIL_PWD;
+
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: service,
   auth: {
-    user: 'precannastyles@gmail.com',
-    pass: 'yourpassword'
+    user: email,
+    pass: password'
   }
 });
 

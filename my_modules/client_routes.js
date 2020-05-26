@@ -118,6 +118,10 @@ module.exports.init = (app, passport) => {
     });
   });
 
+  app.get('/forgot', function(req, res) {
+    res.render('forgot');
+  });
+
   //*****Post Routes**************************************************************
   app.post('/review', function(req, res) {
     db_updates.addreview(req, res);
@@ -138,5 +142,9 @@ module.exports.init = (app, passport) => {
 
   app.post('/sendmail', function(req, res) {
 
+  });
+
+  app.post('/reqreset', function(req, reset) {
+    require('./pass_reset').generate_token(req, res);
   });
 }

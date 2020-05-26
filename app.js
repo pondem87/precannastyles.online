@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
@@ -77,5 +78,6 @@ function errorHandler (err, req, res, next) {
 app.use(errorHandler);
 
 //***********Start The Servive**************************************************
-console.log("Server listening on port 3000");
-app.listen(3000);
+const server_port = process.env.PORT;
+console.log("Server listening on port: ", server_port);
+app.listen(server_port);
