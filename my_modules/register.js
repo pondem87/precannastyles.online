@@ -9,10 +9,10 @@ module.exports.register = (req, res, next) => {
     var pw = pw_hashing.gen_pword(req.body.password2);
 
     //random unknown reset_code
-    const token = str.random(50);
+    const token = str.random(30);
 
     var sql = 'INSERT INTO `user` (`forenames`, `surname`, `email`, `hashed`, `salt`, `address`, `phone`,`active`,`admin`,`reset_code`) VALUES (?)';
-    var values = [req.body.firstname, req.body.lastname, req.body.email, pw.hashed, pw.salt, req.body.address, req.body.phone, '1', '0', `token`];
+    var values = [req.body.firstname, req.body.lastname, req.body.email, pw.hashed, pw.salt, req.body.address, req.body.phone, '1', '0', token];
     connection.query(sql, [values], (error, results, fields) => {
       if (error) {
         if (error.code == 'ER_DUP_ENTRY') {

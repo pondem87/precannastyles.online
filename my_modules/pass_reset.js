@@ -88,7 +88,7 @@ const set_password = (req, res) => {
   pool.getConnection((error, connection) => {
     if (error) throw new Error(error.message);
 
-    const token = str.random(50);
+    const token = str.random(30);
 
     var pw = phash.gen_pword(req.body.password);
     var hash = phash.gen_hash(req.body.token);
