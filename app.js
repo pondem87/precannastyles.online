@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({path: __dirname + '/.env'});
 const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
@@ -15,7 +15,7 @@ const app = express();
 //************setup multer for file uploads**************************************
 var multerStore = multer.diskStorage({
   destination: (req, file, callback) => {
-    var img_dir = cmanager.static_root_url.product_img + "products/img/" + req.body.code;
+    var img_dir = __dirname  + "/products/img/" + req.body.code;
     if (!fs.existsSync(img_dir)) {
       fs.mkdirSync(img_dir);
     }
@@ -23,7 +23,7 @@ var multerStore = multer.diskStorage({
     callback(null, img_dir + "/");
   },
   filename: (req, file, callback) => {
-    var img_root = cmanager.static_root_url.product_img + "products/img/" + req.body.code + "/";
+    var img_root = __dirname + "/products/img/" + req.body.code + "/";
     var filename = '';
     var suffix = 0;
     do {
@@ -38,9 +38,10 @@ var multerStore = multer.diskStorage({
 var upload = multer({ storage: multerStore });
 
 //***********set up some middleware and static paths****************************
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use('/', express.static('assets'));
-app.use('/products', express.static('products'));
+app.use('/', express.static(__dirname + '/assets'));
+app.use('/products', express.static(__dirname + '/products'));
 app.use(express.urlencoded({ extended : true}));
 
 //**********setup session storage***********************************************

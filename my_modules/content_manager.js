@@ -717,7 +717,7 @@ const unlink_photo = (req, res) => {
 
 //root urls for resources e.g S3 resources
 const static_root_url = {
-  product_img : './'
+  product_img : '/'
 }
 
 //currency variables
