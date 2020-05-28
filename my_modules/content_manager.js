@@ -670,7 +670,7 @@ const update_product = (req, res) => {
 //Remove a photo
 const unlink_photo = (req, res) => {
   console.log("content_manager: unlink_photo func called.");
-  fs.unlink(__dirname + req.query.img_path, (error) => {
+  fs.unlink(__dirname + '/..' + req.query.img_path, (error) => {
     if (error) {
       console.log("content_manager: unlink_photo: ", error.message);
       res.send("error");
