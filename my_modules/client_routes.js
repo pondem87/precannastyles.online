@@ -1,6 +1,7 @@
 const cmanager = require('./content_manager');
 const isAuth = require('./isAuth').isAuth;
 const ps = require('./pass_reset');
+const db_updates = require('./db_updates');
 
 module.exports.init = (app, passport) => {
   //custom middleware for managing content
