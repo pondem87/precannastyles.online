@@ -52,7 +52,7 @@ app.use(session({
     secret: 'Hjnj%OPk_jhsgbdhj87HHGgvcH',
     store: sessionStore,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge : 86400000 }
 }));
 
