@@ -339,6 +339,31 @@ $(document).ready(function(){
                 }
             }
         })
+
+        $('#password_reset_form').validate({
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 8
+                },
+                password2: {
+                    required: true,
+                    minlength: 8,
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                password: {
+                    required: "password required",
+                    minlength: "password must be at least 8 characters"
+                },
+                password2: {
+                    required: "password reset",
+                    minlength: "password must be at least 8 characters",
+                    equalTo: "passwords must match"
+                }
+            }
+        })
     })
 
  })(jQuery)
