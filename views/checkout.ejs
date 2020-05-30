@@ -59,7 +59,10 @@
       }
 
       .details {
-        margin-left: 20px;
+        margin: 10px;
+        padding: 20px;
+        border: 1px grey solid;
+        border-radius: 5px;
       }
     </style>
 </head>
@@ -87,8 +90,8 @@
   <!--================Page Content Area =================-->
   <section class="login_part section_padding">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-12 col-md-12">
+      <div class="row">
+        <div class="col-lg-6 col-md-6">
           <h3 class="mb-30">Your Order:</h3>
           <!-- orders table -->
           <table class="order">
@@ -119,53 +122,56 @@
             </tbody>
           </table>
 
-          <div>
-            <div style="width: 50%; float: left;">
-              <h3 class="mb-30">Your Billing Details:</h3>
-              <div class="details">
-                <h5><%= req.user.forenames + " " + req.user.surname %></h5>
-                <p>Address:<br /><%= req.user.address %><br />
-                  Phone:<br /><%= req.user.phone %><br />
-                  Email:<br /><%= req.user.email %></p>
-                <a href="#" class="genric-btn success circle">change details</a>
-              </div>
-            </div>
+          <table class="order">
+            <tbody>
+              <tr>
+                <td class="product">Order Total</td>
+                <td class="qnty"></td>
+                <td class="total"><%= cartlist.subtotal.toFixed(2) %></td>
+              </tr>
+              <tr>
+                <td class="product">Shipping Fee</td>
+                <td class="qnty"></td>
+                <td class="total">0.00</td>
+              </tr>
+              <tr>
+                <td class="product">Vat (12%)</td>
+                <td class="qnty"></td>
+                <td class="total"><%= (cartlist.subtotal * 0.12).toFixed(2) %></td>
+              </tr>
+              <tr>
+                <td class="product last">To Pay</td>
+                <td class="qnty last"></td>
+                <td class="total last"><%= (cartlist.subtotal * 1.12).toFixed(2) %></td>
+              </tr>
+            </tbody>
+          </table>
 
-            <div>
-              <h3 class="mb-30">Shipping options:</h3>
+        </div>
+
+        <div class="col-lg-6 col-md-6">
+          <h3 class="mb-30">Your Billing Details:</h3>
+          <div class="details">
+            <h5><%= req.user.forenames + " " + req.user.surname %></h5>
+            <p>Address:<br /><%= req.user.address %><br />
+              Phone:<br /><%= req.user.phone %><br />
+              Email:<br /><%= req.user.email %></p>
+            <a href="/profile" class="genric-btn success circle">change details</a>
+          </div>
+
+          <h3 class="mb-30">Shipping options:</h3>
+            <div class="details">
               <input type="radio" id="no_shipping" name="shipping_option" value='0'>
               <label for="no_shipping">No Shipping</label><br />
               <input type="radio" id="standard_shipping" name="shipping_option" value='0'>
               <label for="no_shipping">Standard Shipping</label><br />
-
-              <table class="order">
-                <tbody>
-                  <tr>
-                    <td class="product">Order Total</td>
-                    <td class="qnty"></td>
-                    <td class="total"><%= cartlist.subtotal.toFixed(2) %></td>
-                  </tr>
-                  <tr>
-                    <td class="product">Shipping Fee</td>
-                    <td class="qnty"></td>
-                    <td class="total">0.00</td>
-                  </tr>
-                  <tr>
-                    <td class="product">Vat (12%)</td>
-                    <td class="qnty"></td>
-                    <td class="total"><%= (cartlist.subtotal * 0.12).toFixed(2) %></td>
-                  </tr>
-                  <tr>
-                    <td class="product last">To Pay</td>
-                    <td class="qnty last"></td>
-                    <td class="total last"><%= (cartlist.subtotal * 1.12).toFixed(2) %></td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
+
           </div>
         </div>
-        <div style="clear: both; margin: 30px;"><button class="genric-btn success circle">place order</button></div>
+        <div style="clear: both; margin: 30px;"><button class="btn_3">confirm order</button></div>
+        <div id="payment_gateways">
+        </div>
       </div>
     </div>
   </section>

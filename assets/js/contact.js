@@ -130,10 +130,56 @@ $(document).ready(function(){
       });
     });
 
+    //reset password
     $("#forgot-submit").click(() => {
+      $("#forgot-submit").css('display', 'none');
+      $(".loading").css('display', 'block');
       var email = $("#rstemail").val();
       $.post('/reqreset', { email: email }, function (data) {
         $("#forgot-response").html(data.text);
+        $(".loading").css('display', 'none');
+        $("#forgot-submit").css('display','block');
+      });
+    });
+
+    //edithome
+    $("#save_home").click(() => {
+      var home = {};
+
+      $("#save_home").css('display','none');
+
+      home.banner = {};
+
+      //get Headline
+      home.banner.h1_text = $.trim($(".headline").find(".new_headline").val()) != "" ? $.trim($(".headline").find(".new_headline").val()) : $(".headline").find(".old_headline").html();
+      //get tagline
+      home.banner.h5_text = $.trim($(".tagline").find(".new_tagline").val()) != "" ? $.trim($(".tagline").find(".new_tagline").val()) : $(".tagline").find(".old_tagline").html();
+
+      //get features
+      home.features = [];
+      $(".feature").each(function () {
+        var product = $.trim($(this).find(".new_product_code").val()) != "" ? $(this).find(".new_product_code").val().toUpperCase() : $(this).find(".product_code").html();
+        var feature_label = $.trim($(this).find(".new_feature_label").val()) != "" ? $(this).find(".new_feature_label").val() : $(this).find(".feature_label").html();
+        home.features.push({ product: product, feature_label: feature_label});
+      });
+
+      //get new arrivals
+      home.new_arrivals = [];
+      $(".new_arrivals").each(function() {
+        var product = $.trim($(this).find(".new_product_code").val()) != "" ? $(this).find(".new_product_code").val().toUpperCase() : $(this).find(".product_code").html();
+        home.new_arrivals.push(product);
+      });
+
+      $.get('/savehome', { home: home }, function (data, textStatus, jqXHR) {
+        if (data == "saved") {
+          $("#save_home").css('display','block');
+          $("#save_home").html("home saved");
+          setTimeout(() => { $("#save_home").html("save changes"); }, 3500);
+        } else {
+          $("#save_home").css('display','block');
+          $("#save_home").html("an error occurred");
+          setTimeout(() => { $("#save_home").html("save changes"); }, 3500);
+        }
       });
     });
 

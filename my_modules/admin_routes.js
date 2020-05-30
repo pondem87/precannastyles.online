@@ -54,6 +54,17 @@ module.exports.init = (app, upload) => {
     cmanager.unlink_photo(req, res);
   });
 
+  app.get('/edithome', isAuthAdmin, cmanager.get_home_raw, (req, res) => {
+    res.render('edithome', {
+      home : req.home
+    });
+  });
+
+  app.get('/savehome', isAuthAdmin, (req, res) => {
+    console.log("save home route:", req.query.home);
+    cmanager.set_home_raw(req, res);
+  });
+
   //************POST routes*******************************************************
   app.post('/addproduct', isAuthAdmin, cmanager.product_entry, (req, res) => {
     res.render('uploadimages', {

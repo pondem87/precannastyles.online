@@ -38,7 +38,7 @@ const generate_token = (req, res) => {
         var mail = {};
         mail.to = req.body.email;
         mail.subject = "Precanna Styles: Password Reset"
-        mail.content = "You requested password reset. Follow the link before to reset your password.\r\n"
+        mail.content = "You requested password reset. Follow the link below to reset your password.\r\n"
           + "https://" + req.hostname + '/reset?token=' + token + "\r\n";
         mailer.send_mail(mail, (result) => {
           if (result) {

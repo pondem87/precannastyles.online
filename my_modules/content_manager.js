@@ -118,8 +118,10 @@ const get_home = function (req, res, next) {
         throw error;
       }
 
-      results.forEach((row, index) => {
-        req.home.features[index].product = row;
+      req.home.features.forEach(function(feature) {
+        results.forEach((row, index) => {
+          if (row.code == feature.product) feature.product = row;
+        });
       });
 
       connection.query(sql, [req.home.new_arrivals], (error, results, fields) => {
@@ -137,6 +139,25 @@ const get_home = function (req, res, next) {
         next();
       });
     });
+  });
+}
+
+const get_home_raw = function (req, res, next) {
+  console.log("content_manager: get_home_raw: middleware called");
+  console.log("content_manager: get_home_raw: getting and parsing home.json file");
+  var home = JSON.parse(fs.readFileSync(__dirname + "/home.json"));
+  req.home = home;
+  next()
+}
+
+const set_home_raw = function (req, res) {
+  var data = JSON.stringify(req.query.home);
+  fs.writeFile(__dirname + "/home.json", data, function(error) {
+    if (error) {
+      res.send("error");
+    } else {
+      res.send("saved");
+    }
   });
 }
 //******************************************************************************
@@ -742,6 +763,8 @@ module.exports = {
   get_product : get_product,
   get_category : get_category,
   get_home : get_home,
+  get_home_raw: get_home_raw,
+  set_home_raw: set_home_raw,
   get_category_page : get_category_page,
   get_subcategory_page : get_subcategory_page,
   get_pool : get_pool,
